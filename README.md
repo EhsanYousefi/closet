@@ -6,7 +6,7 @@ Closet helps you bury/hide your records in the closet, and restore them whenever
 
 Closet only works with ActiveRecord(Mongoid will support in near future) now.
 
-There is one main difference between closet and other similar packages, Closet didn't change default behaviour of `ActiveRecord`, instead brings new functionality on ActiveRecord objects. 
+There is one main difference between closet and other similar packages, Closet didn't change default behaviour of `ActiveRecord`, instead brings new functionality on ActiveRecord. 
 
 ## Requirements
     "activerecord", "~> 4.0"
