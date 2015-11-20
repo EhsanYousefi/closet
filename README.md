@@ -1,5 +1,5 @@
 # Closet
-Closet let you bury your records instead of killing(destroy)them.
+Closet let you bury your records instead of killing(destroy) them.
 
 Data is valuable even those you think worthless.
 Closet helps you bury/hide your records in the closet, and restore them whenever you want.
@@ -115,7 +115,7 @@ user.bury!( dependent: false ) # Call `#bury!` without any effect on association
 # => true
 ```
 
-`#restore` and `#restore` are inverse of `#bury` and `#bury!`.
+`#restore` and `#restore!` are inverse of `#bury` and `#bury!`.
 
 ### Class Methods
 
