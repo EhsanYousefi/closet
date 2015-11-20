@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Closet let you bury your records instead of killing them.}
   spec.description   = %q{Closet let you bury your records instead of killing them. Data is valuable even thoes you think worthless. Closet helps you bury/hide your records in closet, and restore them whenever you want. Colest only works with ActiveRecord(Mongoid will support in near future) }
-  spec.homepage      = "Put your gem's website or public repo URL here."
+  spec.homepage      = "https://github.com/EhsanYousefi/closet"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
