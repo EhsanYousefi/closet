@@ -1,5 +1,10 @@
 # Closet
-Closet let you bury(flag as buried) your records instead of killing(destroy)them. Data is valuable even thoes you think worthless.Closet helps you bury/hide your records in the closet, and restore them whenever you want, Colest only works with ActiveRecord(Mongoid will support in near future) now.
+Closet let you bury(flag as buried) your records instead of killing(destroy)them.
+
+Data is valuable even those you think worthless.Closet helps you bury/hide your records in the closet, and restore them whenever you want.
+
+Closet only works with ActiveRecord(Mongoid will support in near future) now.
+
 There is one main difference between closet and other similar packages, Closet didn't change default behaviour of `ActiveRecord`, instead brings new functionality on ActiveRecord objects. 
 
 ## Requirements
@@ -159,7 +164,7 @@ If you want to use the uniqueness for all of the records:
 <!--```-->
 
 ### Callbacks
-Closet provides a few callbacks,`bury` callback triggred after/around/before a record gets buried, `restore` callback triggered after/around/before a records gets restored.
+Closet provides a few callbacks,`bury` callback triggered after/around/before a record gets buried, `restore` callback triggered after/around/before a records gets restored.
 ```ruby
 class User < ActiveRecord::Base
     # define associations
