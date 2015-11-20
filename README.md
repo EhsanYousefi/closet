@@ -1,7 +1,9 @@
 # Closet
 Closet let you bury your records instead of killing(destroy)them.
+
 Data is valuable even those you think worthless.
 Closet helps you bury/hide your records in the closet, and restore them whenever you want.
+
 Closet only works with ActiveRecord(Mongoid will support in near future) now.
 
 There is one main difference between closet and other similar packages, Closet didn't change default behaviour of `ActiveRecord`, instead brings new functionality on ActiveRecord objects. 
