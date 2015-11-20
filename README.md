@@ -59,19 +59,23 @@ class User < ActiveRecord::Base
 end
 ```
 
-Closet is smart, after including closet into your model, closet will include on every association with `dependent` option automatically.
-So there is no need to include `Closet` into model's associations with `dependent` option.
+### Associations
+
+Closet is smart, after including `Closet` into your model, closet will include on every association with `dependent` option automatically. So there is no need to include `Closet` into model's associations with `dependent` option.
 
 Closet only works with following associations: `has_many`, `has_one`, `belongs_to`.
-It means you must run mentioned migration for every association with `dependent` option.
+It means you must run the migration for every association with `dependent` option.
 
 It worth to mention that `dependent` option works exactly like ActiveRecord:
 ```ruby
 has_many   dependent: # Acceptable values: [:destroy, :delete_all]
 has_one    dependent: # Acceptable values: [:destroy, :delete]
-belongs_to dependent  # Acceptable values: [:destroy, :delete]
+belongs_to dependent:  # Acceptable values: [:destroy, :delete]
 ```
 
+### Instance Methods
+
+All of instance methods are using ActiveRecord Transactions.
 
 Calling `#bury` method on `User` instance will update the `buried_at` column:
 
@@ -82,6 +86,14 @@ user.bury # Always return in boolean
 # => true
 user.buried?
 # => true
+user.bury( dependent: false ) # Call bury without dependent callbacks
+# => true
+```
+`#bury!` is similar to `#bury` method except it raise `Exception` on failure.
+
+```ruby
+is_going_to_failure.bury!
+# => Exception
 ```
 
 Also if your model have an association with `dependent` option, `#bury` effects on the association too.
@@ -99,11 +111,26 @@ user.articles.map do |article|
     article.buried?
 end
 # => [true, true, ... ]
+user.bury!( dependent: false ) # Call `#bury!` without any effect on associations
+# => true
 ```
-If you want to bury all of the records:
+
+`#restore` and `#restore` are inverse of `#bury` and `#bury!`.
+
+### Class Methods
+
+All of class methods are using ActiveRecord Transactions.
+
+If you want to bury all of the records in a table:
 ```ruby
 User.bury_all
 ```
+`#bury_all` have a dependent argument like `#bury` method.
+`#bury_all!` is similar to `#bury_all` method except it raise `Exception` on failure.
+`#restore_all` and `#restore_all!` are inverse of `#bury_all` and `#bury_all!`.
+
+### Query Methods
+
 If you're looking for buried records:
 ```ruby
 User.where_buried
@@ -116,31 +143,14 @@ If you're looking for all records:
 ```ruby
 User.all
 ```
+If you're looking for buried/normal/all records on an association:
+```ruby
+user.articles.where_buried
+user.articles.where_not_buried
+user.articles
+```
 as you see Closet didn't change activerecord default behaviour.
 
-Use `#restore` if you want to restore buried record:
-```ruby
-user.buried?
-# => true
-user.restore # return in boolean
-# => true
-user.buried?
-# => false
-```
-`#restore` effects on associations with dependent option too:
-```ruby
-user.restore! # on succeed returns `true`, on failure raise Exception
-# => true
-user.articles.map do |article|
-    article.buried?
-end
-# => [false, false, ... ]
-```
-
-If you want to restore all records:
-```ruby
-User.restore_all
-```
 ### Validations
 #### Uniqueness
 If you want to use uniqueness validation for records where not buried:
@@ -156,19 +166,8 @@ If you want to use the uniqueness for all of the records:
     validates :property, uniqueness: true
 ```
 
-<!--### Class methods-->
-<!--`#bury_all`-->
-<!--```ruby-->
-<!--    User.bury_all(dependent: true)-->
-<!--    # Bury all of the records in users table at once-->
-<!--    # This method surrounded by ActiveRecord::Transaction-->
-<!--    # Dependent option is true by defualt-->
-<!--    # You can skip _bury callbacks with dependent: false-->
-<!--    # On succeed returns #Array -->
-<!--```-->
-
 ### Callbacks
-Closet provides a few callbacks,`bury` callback triggered after/around/before a record gets buried, `restore` callback triggered after/around/before a records gets restored.
+Closet provides a few callbacks,`bury` callback triggered after/around/before a record gets buried, `restore` callback triggered after/around/before a record gets restored.
 ```ruby
 class User < ActiveRecord::Base
     # define associations
